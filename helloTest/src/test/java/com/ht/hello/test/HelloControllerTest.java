@@ -17,18 +17,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.ht.hello.controller.HelloResource;
+import com.ht.hello.controller.HelloController;
 import com.ht.hello.service.HelloService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class HelloResourceTest {
+public class HelloControllerTest {
 	private MockMvc mockMvc;
 
 	@Mock
 	private HelloService helloService;
 	
 	@InjectMocks
-    private HelloResource helloResource;
+    private HelloController helloResource;
 	
 	@Before
     public void setUp() throws Exception {

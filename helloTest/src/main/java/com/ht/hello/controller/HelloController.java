@@ -13,7 +13,7 @@ import com.ht.hello.service.HelloService;
 
 @RestController
 @RequestMapping("/hello")
-public class HelloResource {
+public class HelloController {
 	@Autowired
 	private HelloService helloService;
 
