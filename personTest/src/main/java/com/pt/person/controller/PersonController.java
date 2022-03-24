@@ -28,7 +28,7 @@ public class PersonController {
     }
 
     @GetMapping("/select/{id}")
-    private Person getPerson(@PathVariable("id") int id) {
+    private Person getPersonById(@PathVariable("id") int id) {
         return personService.getPersonById(id);
     }
 

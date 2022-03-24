@@ -1,7 +1,5 @@
 package com.pt.person.model;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +13,7 @@ public class Person {
 	private String firstName;
 	private String lastName;
 	private String phoneNumber;
-	private Date date;
+	private String date;
 	
 	public int getId() {
 		return id;
@@ -49,11 +47,11 @@ public class Person {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
