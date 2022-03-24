@@ -8,4 +8,4 @@ phone_number VARCHAR(100) NULL
 );
 
 insert into person(id, first_name, last_name, date, phone_number) values (1, 'Pedro', 'Ferreira', '2022-03-23', '982342215');
-insert into person(id, first_name, last_name, date), phone_number values (2, 'João', 'Eduardo', '2022-03-24', '982342222');
+insert into person(id, first_name, last_name, date, phone_number) values (2, 'João', 'Eduardo', '2022-03-24', '982342222');
