@@ -1,4 +1,4 @@
-package com.ht.helloexample.controller;
+package com.ht.hello.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ht.helloexample.model.Hello;
-import com.ht.helloexample.service.HelloService;
+import com.ht.hello.model.Hello;
+import com.ht.hello.service.HelloService;
 
 @RestController
 @RequestMapping("/hello")

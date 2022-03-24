@@ -1,4 +1,4 @@
-package com.ht.helloexample.service;
+package com.ht.hello.service;
 
 import org.springframework.stereotype.Component;
 

@@ -17,8 +17,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.ht.helloexample.controller.HelloResource;
-import com.ht.helloexample.service.HelloService;
+import com.ht.hello.controller.HelloResource;
+import com.ht.hello.service.HelloService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class HelloResourceTest {

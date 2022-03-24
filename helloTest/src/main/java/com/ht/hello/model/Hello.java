@@ -1,4 +1,4 @@
-package com.ht.helloexample.model;
+package com.ht.hello.model;
 
 public class Hello {
 	private String title;
