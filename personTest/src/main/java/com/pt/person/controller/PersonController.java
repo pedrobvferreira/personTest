@@ -9,26 +9,27 @@ import com.pt.person.model.Person;
 import com.pt.person.service.PersonService;
 
 @RestController
+@RequestMapping("/endpoint")
 public class PersonController {
 	@Autowired
     PersonService personService;
 
-    @GetMapping("/persons")
+    @GetMapping("/select")
     private List<Person> getAllPersons() {
         return personService.findAll();
     }
 
-    @GetMapping("/persons/{id}")
+    @GetMapping("/select/{id}")
     private Person getPerson(@PathVariable("id") int id) {
         return personService.getPersonById(id);
     }
 
-    @DeleteMapping("/persons/{id}")
+    @DeleteMapping("/delete/{id}")
     private void deletePerson(@PathVariable("id") int id) {
         personService.delete(id);
     }
 
-    @PostMapping("/persons")
+    @PostMapping("/insert")
     private int savePerson(@RequestBody Person person) {
         personService.saveOrUpdate(person);
         return person.getId();
