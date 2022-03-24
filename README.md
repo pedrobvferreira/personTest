@@ -1,7 +1,8 @@
-Hello Test
+helloTest
 https://www.youtube.com/watch?v=Ijj5RLSAcYw
 
-
+---------------------------------------------------------------------------------------------
+personTest:
 
 # Data:
 Sample example of JSON data object:
@@ -23,16 +24,13 @@ The `REST` service must expose the `/endpoint` endpoint, which allows for managi
 * creates a new weather data record
 * the response code is 201 and the response body is the created record, including its unique id
 
-
 `GET` request to `/select`:
 * the response code is 200
 * the response body is an array of matching records, ordered by their ids in increasing order
 
-
 `GET` request to `/select/<id>`:
 * returns a record with the given id and status code 200
 * if there is no record in the database with the given id, the response code is 404
-
 
 `DELETE` request to `/delete/<id>`:
 * deletes the record with the given id from the database and return status code 200
