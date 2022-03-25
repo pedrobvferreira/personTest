@@ -22,11 +22,11 @@ public class PersonService {
         return personRepository.findById(id).get();
     }
 
-    public Person saveOrUpdate(Person person) {
+    public Person saveOrUpdatePerson(Person person) {
     	return personRepository.save(person);
     }
 
-    public Boolean delete(int id) {
+    public Boolean deleteUserById(int id) {
 		var user = getPersonById(id);
 		if (user == null) {
 			return false;
