@@ -33,12 +33,11 @@ public class HelloControllerTest {
 	private HelloService helloService;
 	
 	@InjectMocks
-    private HelloController helloResource;
+    private HelloController helloController;
 	
 	@Before
     public void setUp() throws Exception {
-        mockMvc = MockMvcBuilders.standaloneSetup(helloResource)
-                .build();
+		mockMvc = MockMvcBuilders.standaloneSetup(helloController).build();
     }
 
     @Test
