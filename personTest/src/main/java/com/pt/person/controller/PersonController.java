@@ -35,12 +35,11 @@ public class PersonController {
 
 	@DeleteMapping("/delete/{id}")
 	private ResponseEntity<?> deletePersonById(@PathVariable("id") int id) {
-		var userDeleted = personService.delete(id);
-		if (!userDeleted) {
+		var isRemoved = personService.delete(id);
+		if (!isRemoved) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		} else {
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body(id);
 		}
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(id);
 	}
 
     @PostMapping("/insert")
