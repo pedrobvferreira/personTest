@@ -22,7 +22,7 @@ public class PersonController {
 
     @GetMapping("/select")
     private ResponseEntity<?> getAllPersons() {
-    	var listPersons = personService.findAll();
+    	var listPersons = personService.getAllPersons();
         
         return ResponseEntity.status(HttpStatus.OK).body(listPersons);
     }

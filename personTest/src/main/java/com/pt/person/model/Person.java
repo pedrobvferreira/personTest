@@ -15,6 +15,17 @@ public class Person {
 	private String phoneNumber;
 	private String date;
 	
+	public Person () {
+	}
+	
+	public Person(int id, String firstName, String lastName, String phoneNumber, String date){
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.date = date;
+	}
+	
 	public int getId() {
 		return id;
 	}
