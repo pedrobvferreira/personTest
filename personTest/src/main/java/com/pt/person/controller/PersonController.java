@@ -34,13 +34,12 @@ public class PersonController {
     }
 
 	@DeleteMapping("/delete/{id}")
-	private ResponseEntity<?> deletePerson(@PathVariable("id") int id) {
-		var user = personService.getPersonById(id);
-		if (user == null) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+	private ResponseEntity<?> deletePersonById(@PathVariable("id") int id) {
+		var userDeleted = personService.delete(id);
+		if (!userDeleted) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		} else {
-			personService.delete(id);
-			return ResponseEntity.status(HttpStatus.OK).body(null);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(id);
 		}
 	}
 
@@ -48,5 +47,19 @@ public class PersonController {
     private ResponseEntity<?> savePerson(@RequestBody Person person) {
     	var user = personService.saveOrUpdate(person);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+    
+    @PostMapping("/update/{id}")
+    private ResponseEntity<?> updatePersonById(@PathVariable("id") int id) {
+    	var user = personService.saveOrUpdate(personService.getPersonById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+    	
+//    	var existingUser = personService.getPersonById(id);
+//		if (existingUser == null) {
+//			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+//		} else {
+//			var updateUser = personService.saveOrUpdate(existingUser);
+//			return ResponseEntity.status(HttpStatus.OK).body(updateUser);
+//		}
     }
 }

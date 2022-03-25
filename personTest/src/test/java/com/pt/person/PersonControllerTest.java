@@ -37,12 +37,12 @@ public class PersonControllerTest {
 		when(personService.getAllPersons()).thenReturn(usersList);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get("/endpoint/select"))
-		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.size()").value(1))
-    	.andExpect(jsonPath("$[0].firstName").value("Pedro"))
-    	.andExpect(jsonPath("$[0].lastName").value("Ferreira"))
-    	.andExpect(jsonPath("$[0].date").value("2022-03-23"))
-    	.andExpect(jsonPath("$[0].phoneNumber").value("98234221"));
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.size()").value(1))
+			.andExpect(jsonPath("$[0].firstName").value("Pedro"))
+			.andExpect(jsonPath("$[0].lastName").value("Ferreira"))
+			.andExpect(jsonPath("$[0].date").value("2022-03-23"))
+			.andExpect(jsonPath("$[0].phoneNumber").value("98234221"));
 	}
 	
 	@Test
@@ -51,7 +51,7 @@ public class PersonControllerTest {
         when(personService.getPersonById(anyInt())).thenReturn(person);
         
         //create a mock HTTP request to verify the expected result
-		mockMvc.perform(MockMvcRequestBuilders.get("/endpoint/select/1"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/endpoint/select/{id}", 1))
         	.andDo(print())
         	.andExpect(status().isOk())
         	.andExpect(jsonPath("$.firstName").value("Pedro"))
@@ -76,4 +76,27 @@ public class PersonControllerTest {
             .andExpect(jsonPath("$.date").value("2022-03-20"))
             .andExpect(jsonPath("$.phoneNumber").value("965852262"));
 	}
+	
+	@Test
+	public void deletePersonByIdTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/endpoint/delete/{id}", 1))
+        	.andExpect(status().isAccepted());
+	}
+	
+//	@Test
+//	public void updatePersonByIdTest() throws Exception {
+//		var person = new Person("Bruno", "Fernandes", "98234221", "2022-03-20");
+//        when(personService.saveOrUpdate(any(Person.class))).thenReturn(person);
+//        
+//        //mock update "/user
+//        mockMvc.perform(MockMvcRequestBuilders.put("/endpoint/update/{id}", 1)
+//        	.content(new ObjectMapper().writeValueAsString(person))
+//            .contentType(MediaType.APPLICATION_JSON))
+//            .andExpect(status().isOk())
+//            .andExpect(jsonPath("$.id").exists())
+//            .andExpect(jsonPath("$.firstName").value("Bruno"))
+//            .andExpect(jsonPath("$.lastName").value("Fernandes"))
+//            .andExpect(jsonPath("$.date").value("2022-03-20"))
+//            .andExpect(jsonPath("$.phoneNumber").value("98234221"));
+//	}
 }
