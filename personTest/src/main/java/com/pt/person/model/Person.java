@@ -18,8 +18,7 @@ public class Person {
 	public Person () {
 	}
 	
-	public Person(int id, String firstName, String lastName, String phoneNumber, String date){
-		this.id = id;
+	public Person(String firstName, String lastName, String phoneNumber, String date){
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;

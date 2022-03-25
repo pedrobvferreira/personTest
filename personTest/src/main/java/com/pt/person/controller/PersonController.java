@@ -17,6 +17,7 @@ import com.pt.person.service.PersonService;
 @RestController
 @RequestMapping("/endpoint")
 public class PersonController {
+	
 	@Autowired
     PersonService personService;
 
@@ -46,6 +47,6 @@ public class PersonController {
     @PostMapping("/insert")
     private ResponseEntity<?> savePerson(@RequestBody Person person) {
     	var user = personService.saveOrUpdate(person);
-        return ResponseEntity.status(HttpStatus.OK).body(user.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(user.getId());
     }
 }
