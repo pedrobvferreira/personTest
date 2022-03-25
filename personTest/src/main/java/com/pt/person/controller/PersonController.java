@@ -47,6 +47,6 @@ public class PersonController {
     @PostMapping("/insert")
     private ResponseEntity<?> savePerson(@RequestBody Person person) {
     	var user = personService.saveOrUpdate(person);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 }

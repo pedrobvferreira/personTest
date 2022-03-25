@@ -7,12 +7,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
@@ -38,11 +38,11 @@ public class PersonControllerTest {
 		
 		mockMvc.perform(MockMvcRequestBuilders.get("/endpoint/select"))
 		.andExpect(status().isOk())
-		.andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(1))
-    	.andExpect(MockMvcResultMatchers.jsonPath("$[0].firstName").value("Pedro"))
-    	.andExpect(MockMvcResultMatchers.jsonPath("$[0].lastName").value("Ferreira"))
-    	.andExpect(MockMvcResultMatchers.jsonPath("$[0].date").value("2022-03-23"))
-    	.andExpect(MockMvcResultMatchers.jsonPath("$[0].phoneNumber").value("98234221"));
+		.andExpect(jsonPath("$.size()").value(1))
+    	.andExpect(jsonPath("$[0].firstName").value("Pedro"))
+    	.andExpect(jsonPath("$[0].lastName").value("Ferreira"))
+    	.andExpect(jsonPath("$[0].date").value("2022-03-23"))
+    	.andExpect(jsonPath("$[0].phoneNumber").value("98234221"));
 	}
 	
 	@Test
@@ -54,10 +54,10 @@ public class PersonControllerTest {
 		mockMvc.perform(MockMvcRequestBuilders.get("/endpoint/select/1"))
         	.andDo(print())
         	.andExpect(status().isOk())
-        	.andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("Pedro"))
-        	.andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("Ferreira"))
-        	.andExpect(MockMvcResultMatchers.jsonPath("$.date").value("2022-03-23"))
-        	.andExpect(MockMvcResultMatchers.jsonPath("$.phoneNumber").value("98234221"));
+        	.andExpect(jsonPath("$.firstName").value("Pedro"))
+        	.andExpect(jsonPath("$.lastName").value("Ferreira"))
+        	.andExpect(jsonPath("$.date").value("2022-03-23"))
+        	.andExpect(jsonPath("$.phoneNumber").value("98234221"));
 	}
 	
 	@Test
@@ -66,14 +66,14 @@ public class PersonControllerTest {
         when(personService.saveOrUpdate(any(Person.class))).thenReturn(person);
         
      	//mock request "/user
-        mockMvc.perform(MockMvcRequestBuilders.post("/insert")
-        		.content(new ObjectMapper().writeValueAsString(person))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Filipe"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("Fernandes"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.date").value("2022-03-20"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.phoneNumber").value("965852262"));
+        mockMvc.perform(MockMvcRequestBuilders.post("/endpoint/insert")
+        	.content(new ObjectMapper().writeValueAsString(person))
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.id").exists())
+            .andExpect(jsonPath("$.firstName").value("Filipe"))
+            .andExpect(jsonPath("$.lastName").value("Fernandes"))
+            .andExpect(jsonPath("$.date").value("2022-03-20"))
+            .andExpect(jsonPath("$.phoneNumber").value("965852262"));
 	}
 }
