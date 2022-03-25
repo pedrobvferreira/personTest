@@ -71,7 +71,7 @@ public class PersonControllerTest {
         	.content(new ObjectMapper().writeValueAsString(person))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated())
-            .andDo(print())
+//            .andDo(print())
             .andExpect(jsonPath("$.id").exists())
             .andExpect(jsonPath("$.firstName").value("Filipe"))
             .andExpect(jsonPath("$.lastName").value("Fernandes"))
@@ -79,12 +79,15 @@ public class PersonControllerTest {
             .andExpect(jsonPath("$.phoneNumber").value("965852262"));
 	}
 	
-//	@Test
-//	public void deletePersonByIdTest() throws Exception {
-//        mockMvc.perform(MockMvcRequestBuilders.delete("/endpoint/delete/{id}", 1))
+	@Test
+	public void deletePersonByIdTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+        	.delete("/endpoint/delete/{id}", 1)
+	        .contentType(MediaType.APPLICATION_JSON)
+	        .accept(MediaType.APPLICATION_JSON))
 //        	.andDo(print())
-//        	.andExpect(status().isAccepted());
-//	}
+        	.andExpect(status().isOk());
+	}
 	
 	@Test
 	public void updatePersonByIdTest() throws Exception {
@@ -93,7 +96,7 @@ public class PersonControllerTest {
 //        when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(person);
         
         //mock update "/user
-        mockMvc.perform(MockMvcRequestBuilders.put("/endpoint/update/{id}", 2, person)
+        mockMvc.perform(MockMvcRequestBuilders.put("/endpoint/update/{id}", 1)
         	.content(content)
             .contentType(MediaType.APPLICATION_JSON)
         	.accept(MediaType.APPLICATION_JSON))
