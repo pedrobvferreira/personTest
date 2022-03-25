@@ -37,6 +37,7 @@ public class PersonControllerTest {
 		when(personService.getAllPersons()).thenReturn(usersList);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get("/endpoint/select"))
+			.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.size()").value(1))
 			.andExpect(jsonPath("$[0].firstName").value("Pedro"))
@@ -80,6 +81,7 @@ public class PersonControllerTest {
 	@Test
 	public void deletePersonByIdTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/endpoint/delete/{id}", 1))
+        	.andDo(print())
         	.andExpect(status().isAccepted());
 	}
 	
