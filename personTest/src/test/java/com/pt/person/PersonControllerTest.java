@@ -88,22 +88,23 @@ public class PersonControllerTest {
 	
 	@Test
 	public void updatePersonByIdTest() throws Exception {
-		var person = new Person(1, "David", "Landup", "915643456", "2018-03-20");
-		var updatedPerson = new Person(1, "Bruno", "Fernandes", "98234221", "2022-03-20");
+		var person = new Person(1, "Bruno", "Fernandes", "98234221", "2022-03-20");
 		when(personService.getPersonById(anyInt())).thenReturn(person);
+		
+		var updatedPerson = new Person(1, "David", "Landup", "915643456", "2018-03-20");
 		when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(updatedPerson);
         
         //mock update "/user
         mockMvc.perform(put("/endpoint/update/{id}", 1)
-        	.content(new ObjectMapper().writeValueAsString(person))
+        	.content(new ObjectMapper().writeValueAsString(updatedPerson))
             .contentType(MediaType.APPLICATION_JSON))
 //            .andDo(print())
             .andExpect(jsonPath("$.id").exists())
-            .andExpect(jsonPath("$.firstName").value("Bruno"))
-            .andExpect(jsonPath("$.lastName").value("Fernandes"))
-            .andExpect(jsonPath("$.date").value("2022-03-20"))
-            .andExpect(jsonPath("$.phoneNumber").value("98234221"))
-            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.firstName").value("David"))
+            .andExpect(jsonPath("$.lastName").value("Landup"))
+            .andExpect(jsonPath("$.date").value("2018-03-20"))
+            .andExpect(jsonPath("$.phoneNumber").value("915643456"))
+            .andExpect(status().isOk())
         	.andReturn();
 	}
 }
