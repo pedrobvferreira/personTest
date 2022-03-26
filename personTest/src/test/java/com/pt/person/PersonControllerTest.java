@@ -1,5 +1,13 @@
 package com.pt.person;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -7,15 +15,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pt.person.controller.PersonController;
@@ -38,12 +37,12 @@ public class PersonControllerTest {
 		
 		mockMvc.perform(MockMvcRequestBuilders.get("/endpoint/select"))
 //			.andDo(print())
-			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.size()").value(1))
 			.andExpect(jsonPath("$[0].firstName").value("Pedro"))
 			.andExpect(jsonPath("$[0].lastName").value("Ferreira"))
 			.andExpect(jsonPath("$[0].date").value("2022-03-23"))
-			.andExpect(jsonPath("$[0].phoneNumber").value("98234221"));
+			.andExpect(jsonPath("$[0].phoneNumber").value("98234221"))
+			.andExpect(status().isOk());
 	}
 	
 	@Test
@@ -54,11 +53,11 @@ public class PersonControllerTest {
         //create a mock HTTP request to verify the expected result
 		mockMvc.perform(MockMvcRequestBuilders.get("/endpoint/select/{id}", 1))
 //        	.andDo(print())
-        	.andExpect(status().isOk())
         	.andExpect(jsonPath("$.firstName").value("Pedro"))
         	.andExpect(jsonPath("$.lastName").value("Ferreira"))
         	.andExpect(jsonPath("$.date").value("2022-03-23"))
-        	.andExpect(jsonPath("$.phoneNumber").value("98234221"));
+        	.andExpect(jsonPath("$.phoneNumber").value("98234221"))
+        	.andExpect(status().isOk());
 	}
 	
 	@Test
@@ -70,13 +69,13 @@ public class PersonControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/endpoint/insert")
         	.content(new ObjectMapper().writeValueAsString(person))
             .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isCreated())
 //            .andDo(print())
             .andExpect(jsonPath("$.id").exists())
             .andExpect(jsonPath("$.firstName").value("Filipe"))
             .andExpect(jsonPath("$.lastName").value("Fernandes"))
             .andExpect(jsonPath("$.date").value("2022-03-20"))
-            .andExpect(jsonPath("$.phoneNumber").value("965852262"));
+            .andExpect(jsonPath("$.phoneNumber").value("965852262"))
+            .andExpect(status().isCreated());
 	}
 	
 	@Test
@@ -93,6 +92,7 @@ public class PersonControllerTest {
 	@Test
 	public void updatePersonByIdTest() throws Exception {
 		var person = new Person(1, "Bruno", "Fernandes", "98234221", "2022-03-20");
+		when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(person);
         
         //mock update "/user
         mockMvc.perform(MockMvcRequestBuilders.put("/endpoint/update/{id}", 1)
