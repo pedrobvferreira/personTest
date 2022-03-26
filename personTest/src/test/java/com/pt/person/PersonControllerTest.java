@@ -1,10 +1,9 @@
 package com.pt.person;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.List;
 
@@ -14,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pt.person.controller.PersonController;
@@ -35,7 +33,7 @@ public class PersonControllerTest {
 		var usersList = List.of(new Person("Pedro", "Ferreira", "98234221", "2022-03-23"));
 		when(personService.getAllPersons()).thenReturn(usersList);
 		
-		mockMvc.perform(MockMvcRequestBuilders.get("/endpoint/select"))
+		mockMvc.perform(get("/endpoint/select"))
 //			.andDo(print())
 			.andExpect(jsonPath("$.size()").value(1))
 			.andExpect(jsonPath("$[0].firstName").value("Pedro"))
@@ -51,7 +49,7 @@ public class PersonControllerTest {
         when(personService.getPersonById(anyInt())).thenReturn(person);
         
         //create a mock HTTP request to verify the expected result
-		mockMvc.perform(MockMvcRequestBuilders.get("/endpoint/select/{id}", 1))
+		mockMvc.perform(get("/endpoint/select/{id}", 1))
 //        	.andDo(print())
         	.andExpect(jsonPath("$.firstName").value("Pedro"))
         	.andExpect(jsonPath("$.lastName").value("Ferreira"))
@@ -66,7 +64,7 @@ public class PersonControllerTest {
         when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(person);
         
      	//mock request "/user
-        mockMvc.perform(MockMvcRequestBuilders.post("/endpoint/insert")
+        mockMvc.perform(post("/endpoint/insert")
         	.content(new ObjectMapper().writeValueAsString(person))
             .contentType(MediaType.APPLICATION_JSON))
 //            .andDo(print())
@@ -80,8 +78,7 @@ public class PersonControllerTest {
 	
 	@Test
 	public void deletePersonByIdTest() throws Exception {		
-        mockMvc.perform(MockMvcRequestBuilders
-        	.delete("/endpoint/delete/{id}", 1)
+        mockMvc.perform(delete("/endpoint/delete/{id}", 1)
 	        .contentType(MediaType.APPLICATION_JSON)
 	        .accept(MediaType.APPLICATION_JSON))
 //        	.andDo(print())
@@ -95,7 +92,7 @@ public class PersonControllerTest {
 		when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(person);
         
         //mock update "/user
-        mockMvc.perform(MockMvcRequestBuilders.put("/endpoint/update/{id}", 1)
+        mockMvc.perform(put("/endpoint/update/{id}", 1)
         	.content(new ObjectMapper().writeValueAsString(person))
             .contentType(MediaType.APPLICATION_JSON))
 //            .andDo(print())
