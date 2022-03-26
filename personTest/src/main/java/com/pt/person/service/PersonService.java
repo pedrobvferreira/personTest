@@ -26,13 +26,7 @@ public class PersonService {
     	return personRepository.save(person);
     }
 
-    public Boolean deleteUserById(int id) {
-		var user = getPersonById(id);
-		if (user == null) {
-			return false;
-		} else {
-			personRepository.deleteById(id);
-			return true;
-		}
+    public void deleteUserById(int id) {
+    	personRepository.deleteById(id);
     }
 }

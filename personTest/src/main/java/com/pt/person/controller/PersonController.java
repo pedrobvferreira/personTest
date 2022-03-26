@@ -42,18 +42,19 @@ public class PersonController {
     
 	@DeleteMapping("/delete/{id}")
 	private ResponseEntity<?> deletePersonById(@PathVariable("id") int id) {
-		var isRemoved = personService.deleteUserById(id);
-		if (!isRemoved) {
+		var user = getPersonById(id);
+		if (user == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(id);
+		personService.deleteUserById(id);
+		return ResponseEntity.status(HttpStatus.OK).body(null);
 	}
     
 	@PutMapping("/update/{id}")
     private ResponseEntity<?> updatePersonById(@PathVariable("id") int id, @RequestBody Person person) {
     	var user = personService.getPersonById(id);
     	if (user == null) {
-    		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     	}
     	user.setFirstName(person.getFirstName());
 		user.setLastName(person.getLastName());

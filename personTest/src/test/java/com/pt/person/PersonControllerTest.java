@@ -80,32 +80,31 @@ public class PersonControllerTest {
 	}
 	
 	@Test
-	public void deletePersonByIdTest() throws Exception {
+	public void deletePersonByIdTest() throws Exception {		
         mockMvc.perform(MockMvcRequestBuilders
         	.delete("/endpoint/delete/{id}", 1)
 	        .contentType(MediaType.APPLICATION_JSON)
 	        .accept(MediaType.APPLICATION_JSON))
 //        	.andDo(print())
-        	.andExpect(status().isOk());
+        	.andExpect(status().isNotFound())
+        	.andReturn();
 	}
 	
 	@Test
 	public void updatePersonByIdTest() throws Exception {
-		var person = new Person("Bruno", "Fernandes", "98234221", "2022-03-20");
-		String content = new ObjectMapper().writeValueAsString(person);
-//        when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(person);
+		var person = new Person(1, "Bruno", "Fernandes", "98234221", "2022-03-20");
         
         //mock update "/user
         mockMvc.perform(MockMvcRequestBuilders.put("/endpoint/update/{id}", 1)
-        	.content(content)
-            .contentType(MediaType.APPLICATION_JSON)
-        	.accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
+        	.content(new ObjectMapper().writeValueAsString(person))
+            .contentType(MediaType.APPLICATION_JSON))
 //            .andDo(print())
             .andExpect(jsonPath("$.id").exists())
             .andExpect(jsonPath("$.firstName").value("Bruno"))
             .andExpect(jsonPath("$.lastName").value("Fernandes"))
             .andExpect(jsonPath("$.date").value("2022-03-20"))
-            .andExpect(jsonPath("$.phoneNumber").value("98234221"));
+            .andExpect(jsonPath("$.phoneNumber").value("98234221"))
+            .andExpect(status().isNotFound())
+        	.andReturn();
 	}
 }
