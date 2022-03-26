@@ -91,7 +91,7 @@ public class PersonControllerTest {
 		var person = new Person(1, "Bruno", "Fernandes", "98234221", "2022-03-20");
 		when(personService.getPersonById(anyInt())).thenReturn(person);
 		
-		var updatedPerson = new Person(1, "David", "Landup", "915643456", "2018-03-20");
+		var updatedPerson = new Person("David", "Landup", "915643456", "2018-03-20");
 		when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(updatedPerson);
         
         //mock update "/user
