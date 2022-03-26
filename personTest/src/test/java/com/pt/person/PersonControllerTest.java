@@ -77,7 +77,7 @@ public class PersonControllerTest {
 	}
 	
 	@Test
-	public void deletePersonByIdTest() throws Exception {		
+	public void deletePersonByIdTest() throws Exception {
         mockMvc.perform(delete("/endpoint/delete/{id}", 1)
 	        .contentType(MediaType.APPLICATION_JSON)
 	        .accept(MediaType.APPLICATION_JSON))
@@ -88,8 +88,10 @@ public class PersonControllerTest {
 	
 	@Test
 	public void updatePersonByIdTest() throws Exception {
-		var person = new Person(1, "Bruno", "Fernandes", "98234221", "2022-03-20");
-		when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(person);
+		var person = new Person(1, "David", "Landup", "915643456", "2018-03-20");
+		var updatedPerson = new Person(1, "Bruno", "Fernandes", "98234221", "2022-03-20");
+		when(personService.getPersonById(anyInt())).thenReturn(person);
+		when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(updatedPerson);
         
         //mock update "/user
         mockMvc.perform(put("/endpoint/update/{id}", 1)
