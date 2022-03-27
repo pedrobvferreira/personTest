@@ -1,4 +1,4 @@
-package com.pt.person;
+package com.pt.person.config;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
