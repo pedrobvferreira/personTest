@@ -1,14 +1,20 @@
 package com.pt.person;
 
+import static springfox.documentation.builders.PathSelectors.regex;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
+
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.UiConfiguration;
+import springfox.documentation.swagger.web.UiConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
@@ -16,17 +22,31 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Controller
 public class SwaggerConfig {
 	
-	@RequestMapping("/")
-    public RedirectView redirectToSwagger() {
-        return new RedirectView("swagger-ui.html");
-    }
+	@Bean
+	public Docket docket(ApiInfo apiInfo) {
+	    return new Docket(DocumentationType.SWAGGER_2)
+	        .groupName("user-api")
+	        .useDefaultResponseMessages(false)
+	        .apiInfo(apiInfo)
+	        .select().paths(regex("/api/.*"))
+	        .build();
+	}
 
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
-                .build();
-    }
+	@Bean
+	public ApiInfo apiInfo() {
+	    return new ApiInfoBuilder()
+	        .title("User API")
+	        .description("API for fetching user related information")
+	        .version("1.0.0")
+	        .build();
+	}
+
+	@Bean
+	public UiConfiguration uiConfiguration() {
+	    return UiConfigurationBuilder.builder()
+	        .deepLinking(true)
+	        .validatorUrl(null)
+	        .build();
+	}
 
 }
