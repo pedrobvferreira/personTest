@@ -1,4 +1,4 @@
-package com.pt.person;
+package com.ht.hello.test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
-public class ExampleTest {
+public class HelloWorldTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
