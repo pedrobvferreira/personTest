@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,6 +28,8 @@ import com.pt.person.service.PersonService;
 @WebMvcTest(PersonController.class)
 public class PersonControllerTest {
 	
+	public static String endpoint = "/api";
+	
 	@Autowired
 	private MockMvc mockMvc;
 	
@@ -38,8 +41,8 @@ public class PersonControllerTest {
 		var usersList = List.of(new Person("Pedro", "Ferreira", "98234221", "2022-03-23"));
 		when(personService.getAllPersons()).thenReturn(usersList);
 		
-		mockMvc.perform(get("/endpoint/select"))
-//			.andDo(print())
+		mockMvc.perform(get(endpoint + "/select"))
+			.andDo(print())
 			.andExpect(jsonPath("$.size()").value(1))
 			.andExpect(jsonPath("$[0].firstName").value("Pedro"))
 			.andExpect(jsonPath("$[0].lastName").value("Ferreira"))
@@ -54,8 +57,8 @@ public class PersonControllerTest {
         when(personService.getPersonById(anyInt())).thenReturn(person);
         
         //create a mock HTTP request to verify the expected result
-		mockMvc.perform(get("/endpoint/select/{id}", 1))
-//        	.andDo(print())
+		mockMvc.perform(get(endpoint + "/select/{id}", 1))
+        	.andDo(print())
         	.andExpect(jsonPath("$.firstName").value("Pedro"))
         	.andExpect(jsonPath("$.lastName").value("Ferreira"))
         	.andExpect(jsonPath("$.date").value("2022-03-23"))
@@ -69,10 +72,10 @@ public class PersonControllerTest {
         when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(person);
         
      	//mock request "/user
-        mockMvc.perform(post("/endpoint/insert")
+        mockMvc.perform(post(endpoint + "/insert")
         	.content(new ObjectMapper().writeValueAsString(person))
             .contentType(MediaType.APPLICATION_JSON))
-//            .andDo(print())
+            .andDo(print())
             .andExpect(jsonPath("$.id").exists())
             .andExpect(jsonPath("$.firstName").value("Filipe"))
             .andExpect(jsonPath("$.lastName").value("Fernandes"))
@@ -83,11 +86,11 @@ public class PersonControllerTest {
 	
 	@Test
 	public void deletePersonByIdTest() throws Exception {
-        mockMvc.perform(delete("/endpoint/delete/{id}", 1)
+        mockMvc.perform(delete(endpoint + "/delete/{id}", 1)
 	        .contentType(MediaType.APPLICATION_JSON)
 	        .accept(MediaType.APPLICATION_JSON))
-//        	.andDo(print())
-        	.andExpect(status().isNotFound())
+        	.andDo(print())
+        	.andExpect(status().isOk())
         	.andReturn();
 	}
 	
@@ -100,10 +103,10 @@ public class PersonControllerTest {
 		when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(updatedPerson);
         
         //mock update "/user
-        mockMvc.perform(put("/endpoint/update/{id}", 1)
+        mockMvc.perform(put(endpoint + "/update/{id}", 1)
         	.content(new ObjectMapper().writeValueAsString(updatedPerson))
             .contentType(MediaType.APPLICATION_JSON))
-//            .andDo(print())
+            .andDo(print())
             .andExpect(jsonPath("$.id").exists())
             .andExpect(jsonPath("$.firstName").value("David"))
             .andExpect(jsonPath("$.lastName").value("Landup"))
