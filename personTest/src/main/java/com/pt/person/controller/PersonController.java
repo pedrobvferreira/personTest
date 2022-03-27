@@ -25,15 +25,16 @@ public class PersonController {
     @GetMapping("/select")
     private ResponseEntity<?> getAllPersons() {
     	var listPersons = personService.getAllPersons();
-        
         return ResponseEntity.status(HttpStatus.OK).body(listPersons);
     }
 
     @GetMapping("/select/{id}")
     private ResponseEntity<?> getPersonById(@PathVariable("id") int id) {
-    	var user =  personService.getPersonById(id);
-        
-        return ResponseEntity.status(HttpStatus.OK).body(user);
+		var user = personService.getPersonById(id);
+		if (user != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(user);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/insert")
@@ -45,25 +46,25 @@ public class PersonController {
 	@DeleteMapping("/delete/{id}")
 	private ResponseEntity<?> deletePersonById(@PathVariable("id") int id) {
 		var user = getPersonById(id);
-		if (user == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		if (user != null) {
+			personService.deleteUserById(id);
+			return ResponseEntity.status(HttpStatus.OK).body(null);
 		}
-		personService.deleteUserById(id);
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
     
 	@PutMapping("/update/{id}")
-    private ResponseEntity<?> updatePersonById(@PathVariable("id") int id, @RequestBody Person person) {
-    	var user = personService.getPersonById(id);
-    	if (user == null) {
-    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    private ResponseEntity<?> updatePersonById(@PathVariable("id") int id, @RequestBody Person newPerson) {
+    	var person = personService.getPersonById(id);
+    	if (person != null) {
+    		person.setFirstName(newPerson.getFirstName());
+    		person.setLastName(newPerson.getLastName());
+    		person.setPhoneNumber(newPerson.getPhoneNumber());
+    		person.setDate(newPerson.getDate());
+    		
+    		personService.saveOrUpdatePerson(person);
+    		return ResponseEntity.status(HttpStatus.OK).body(person);
     	}
-    	user.setFirstName(person.getFirstName());
-		user.setLastName(person.getLastName());
-		user.setPhoneNumber(person.getPhoneNumber());
-		user.setDate(person.getDate());
-		
-		var savedUser = personService.saveOrUpdatePerson(user);
-		return ResponseEntity.status(HttpStatus.OK).body(savedUser);
+    	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

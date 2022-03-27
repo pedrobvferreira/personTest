@@ -1,6 +1,7 @@
 package com.pt.person.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,11 @@ public class PersonService {
     }
 
     public Person getPersonById(int id) {
-        return personRepository.findById(id).get();
+		Optional<Person> person = personRepository.findById(id);
+		if (person.isPresent()) {
+			return personRepository.findById(id).get();
+		}
+		return null;
     }
 
     public Person saveOrUpdatePerson(Person person) {

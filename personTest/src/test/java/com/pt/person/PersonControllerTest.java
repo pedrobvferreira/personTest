@@ -42,12 +42,12 @@ public class PersonControllerTest {
 		when(personService.getAllPersons()).thenReturn(usersList);
 		
 		mockMvc.perform(get(endpoint + "/select"))
-			.andDo(print())
 			.andExpect(jsonPath("$.size()").value(1))
 			.andExpect(jsonPath("$[0].firstName").value("Pedro"))
 			.andExpect(jsonPath("$[0].lastName").value("Ferreira"))
 			.andExpect(jsonPath("$[0].date").value("2022-03-23"))
 			.andExpect(jsonPath("$[0].phoneNumber").value("98234221"))
+            .andDo(print())
 			.andExpect(status().isOk());
 	}
 	
@@ -58,12 +58,13 @@ public class PersonControllerTest {
         
         //create a mock HTTP request to verify the expected result
 		mockMvc.perform(get(endpoint + "/select/{id}", 1))
-        	.andDo(print())
         	.andExpect(jsonPath("$.firstName").value("Pedro"))
         	.andExpect(jsonPath("$.lastName").value("Ferreira"))
         	.andExpect(jsonPath("$.date").value("2022-03-23"))
         	.andExpect(jsonPath("$.phoneNumber").value("98234221"))
-        	.andExpect(status().isOk());
+            .andDo(print())
+        	.andExpect(status().isOk())
+        	.andReturn();
 	}
 	
 	@Test
@@ -75,12 +76,12 @@ public class PersonControllerTest {
         mockMvc.perform(post(endpoint + "/insert")
         	.content(new ObjectMapper().writeValueAsString(person))
             .contentType(MediaType.APPLICATION_JSON))
-            .andDo(print())
             .andExpect(jsonPath("$.id").exists())
             .andExpect(jsonPath("$.firstName").value("Filipe"))
             .andExpect(jsonPath("$.lastName").value("Fernandes"))
             .andExpect(jsonPath("$.date").value("2022-03-20"))
             .andExpect(jsonPath("$.phoneNumber").value("965852262"))
+            .andDo(print())
             .andExpect(status().isCreated());
 	}
 	
@@ -106,12 +107,12 @@ public class PersonControllerTest {
         mockMvc.perform(put(endpoint + "/update/{id}", 1)
         	.content(new ObjectMapper().writeValueAsString(updatedPerson))
             .contentType(MediaType.APPLICATION_JSON))
-            .andDo(print())
             .andExpect(jsonPath("$.id").exists())
             .andExpect(jsonPath("$.firstName").value("David"))
             .andExpect(jsonPath("$.lastName").value("Landup"))
             .andExpect(jsonPath("$.date").value("2018-03-20"))
             .andExpect(jsonPath("$.phoneNumber").value("915643456"))
+            .andDo(print())
             .andExpect(status().isOk())
         	.andReturn();
 	}
