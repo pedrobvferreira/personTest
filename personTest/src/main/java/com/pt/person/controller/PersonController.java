@@ -16,7 +16,7 @@ import com.pt.person.model.Person;
 import com.pt.person.service.PersonService;
 
 @RestController
-@RequestMapping("/endpoint")
+@RequestMapping("/api")
 public class PersonController {
 	
 	@Autowired
