@@ -27,9 +27,4 @@ public class SwaggerConfig {
 				.version("1.0.0").build();
 	}
 
-//	@Bean
-//	public UiConfiguration uiConfiguration() {
-//		return UiConfigurationBuilder.builder().deepLinking(true).validatorUrl(null).build();
-//	}
-
 }
