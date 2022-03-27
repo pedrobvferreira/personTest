@@ -30,8 +30,10 @@ public class PersonController {
     }
 
     @GetMapping("/select/{id}")
-    private Person getPersonById(@PathVariable("id") int id) {
-        return personService.getPersonById(id);
+    private ResponseEntity<?> getPersonById(@PathVariable("id") int id) {
+    	var user =  personService.getPersonById(id);
+        
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @PostMapping("/insert")
