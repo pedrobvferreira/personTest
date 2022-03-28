@@ -38,5 +38,5 @@ The `REST` service must expose the `/api` endpoint, which allows for managing th
 The project by default supports the use of the H2 database.
 
 ----------------------
-## Junit:
+## Testing in Spring Boot:
 MockMvc 
