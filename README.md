@@ -17,7 +17,7 @@ Sample example of JSON data object:
 ```
 
 ## Requirements:
-The `REST` service must expose the `/endpoint` endpoint, which allows for managing the data records in the following way:
+The `REST` service must expose the `/api` endpoint, which allows for managing the data records in the following way:
 
 `POST` request to `/insert` :
 * creates a new weather data record
