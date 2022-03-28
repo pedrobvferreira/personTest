@@ -35,8 +35,8 @@ The `REST` service must expose the `/api` endpoint, which allows for managing th
 * deletes the record with the given id from the database and return status code 200
 * if there was no record in the database with the given id, the response code is 404
 
-Your task is to complete the given project so that it passes all the test cases when running the provided unit tests. The project by default supports the use of the H2 database.
+The project by default supports the use of the H2 database.
 
 ----------------------
-Junit:
+## Junit:
 MockMvc 
