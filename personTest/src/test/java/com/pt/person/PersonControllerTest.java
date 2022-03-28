@@ -68,6 +68,22 @@ public class PersonControllerTest {
 	}
 	
 	@Test
+	private void getPersonByIdParamTest() throws Exception {
+		String id = "1";
+		
+		mockMvc.perform(get(endpoint + "/select/{id}", 1)
+				.param("id", id))
+		
+    	.andExpect(jsonPath("$.firstName").value("Pedro"))
+    	.andExpect(jsonPath("$.lastName").value("Ferreira"))
+    	.andExpect(jsonPath("$.date").value("2022-03-23"))
+    	.andExpect(jsonPath("$.phoneNumber").value("98234221"))
+        .andDo(print())
+    	.andExpect(status().isOk())
+    	.andReturn();
+	}
+	
+	@Test
 	public void savePersonTest() throws Exception {
 		var person = new Person("Filipe", "Fernandes", "965852262", "2022-03-20");
         when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(person);

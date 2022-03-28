@@ -55,6 +55,7 @@ public class HelloControllerTest {
     @Test
     public void testHelloWorldJson() throws Exception {
         mockMvc.perform(get("/hello/json")
+        		.param("message","False Message")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title", Matchers.is("Greetings")))
