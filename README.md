@@ -39,4 +39,5 @@ The project by default supports the use of the H2 database.
 
 ----------------------
 ## Testing in Spring Boot:
-* MockMvc 
+* MockMvc for Controller
+* DataJpaTest for Jpa Entity
