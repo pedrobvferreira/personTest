@@ -36,3 +36,7 @@ The `REST` service must expose the `/endpoint` endpoint, which allows for managi
 * if there was no record in the database with the given id, the response code is 404
 
 Your task is to complete the given project so that it passes all the test cases when running the provided unit tests. The project by default supports the use of the H2 database.
+
+----------------------
+Junit:
+MockMvc 
