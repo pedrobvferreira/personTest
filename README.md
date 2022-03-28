@@ -2,8 +2,6 @@ helloTest:
 https://www.youtube.com/watch?v=Ijj5RLSAcYw
 
 ---------------------------------------------------------------------------------------------
-personTest:
-
 # Data:
 Sample example of JSON data object:
 ```json
