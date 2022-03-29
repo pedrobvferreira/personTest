@@ -22,13 +22,13 @@ public class PersonController {
 	@Autowired
     PersonService personService;
 
-    @GetMapping("/select")
+    @GetMapping("/persons")
     private ResponseEntity<?> getAllPersons() {
     	var listPersons = personService.getAllPersons();
         return ResponseEntity.status(HttpStatus.OK).body(listPersons);
     }
 
-    @GetMapping("/select/{id}")
+    @GetMapping("/persons/{id}")
     private ResponseEntity<?> getPersonById(@PathVariable("id") int id) {
 		var user = personService.getPersonById(id);
 		if (user != null) {

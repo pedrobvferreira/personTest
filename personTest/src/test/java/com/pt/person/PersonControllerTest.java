@@ -41,7 +41,7 @@ public class PersonControllerTest {
 		var usersList = List.of(new Person("Pedro", "Ferreira", "98234221", "2022-03-23"));
 		when(personService.getAllPersons()).thenReturn(usersList);
 		
-		mockMvc.perform(get(endpoint + "/select"))
+		mockMvc.perform(get(endpoint + "/persons"))
 			.andExpect(jsonPath("$.size()").value(1))
 			.andExpect(jsonPath("$[0].firstName").value("Pedro"))
 			.andExpect(jsonPath("$[0].lastName").value("Ferreira"))
@@ -57,7 +57,7 @@ public class PersonControllerTest {
         when(personService.getPersonById(anyInt())).thenReturn(person);
         
         //create a mock HTTP request to verify the expected result
-		mockMvc.perform(get(endpoint + "/select/{id}", 1))
+		mockMvc.perform(get(endpoint + "/persons/{id}", 1))
         	.andExpect(jsonPath("$.firstName").value("Pedro"))
         	.andExpect(jsonPath("$.lastName").value("Ferreira"))
         	.andExpect(jsonPath("$.date").value("2022-03-23"))
@@ -121,7 +121,7 @@ public class PersonControllerTest {
 	private void getPersonByIdParamTest() throws Exception {
 		String id = "1";
 		
-		mockMvc.perform(get(endpoint + "/select/{id}", 1)
+		mockMvc.perform(get(endpoint + "/persons/{id}", 1)
 				.param("id", id))
 		
     	.andExpect(jsonPath("$.firstName").value("Pedro"))
