@@ -16,7 +16,7 @@ import com.pt.person.model.Person;
 import com.pt.person.service.PersonService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1/")
 public class PersonController {
 	
 	@Autowired
@@ -28,7 +28,7 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.OK).body(listPersons);
     }
 
-    @GetMapping("/persons/{id}")
+    @GetMapping("/person/{id}")
     private ResponseEntity<?> getPersonById(@PathVariable("id") int id) {
 		var user = personService.getPersonById(id);
 		if (user != null) {
@@ -37,7 +37,7 @@ public class PersonController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/insert")
+    @PostMapping("/persons")
     private ResponseEntity<?> savePerson(@RequestBody Person person) {
     	var user = personService.saveOrUpdatePerson(person);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
@@ -45,7 +45,7 @@ public class PersonController {
     
 	@DeleteMapping("/delete/{id}")
 	private ResponseEntity<?> deletePersonById(@PathVariable("id") int id) {
-		var user = getPersonById(id);
+		var user = personService.getPersonById(id);
 		if (user != null) {
 			personService.deleteUserById(id);
 			return ResponseEntity.status(HttpStatus.OK).body(null);
