@@ -34,6 +34,12 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- Dependency of lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<!-- Springdoc OpenAPI -->
 	        <dependency>
 	            <groupId>org.springdoc</groupId>

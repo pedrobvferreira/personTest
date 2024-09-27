@@ -19,7 +19,7 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    public Person getPersonById(int id) {
+    public Person getPersonById(Long id) {
 		Optional<Person> person = personRepository.findById(id);
 		if (person.isPresent()) {
 			return personRepository.findById(id).get();
@@ -31,7 +31,7 @@ public class PersonService {
     	return personRepository.save(person);
     }
 
-    public void deleteUserById(int id) {
+    public void deleteUserById(Long id) {
     	personRepository.deleteById(id);
     }
 }

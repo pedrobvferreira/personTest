@@ -29,7 +29,7 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<?> getPersonById(@PathVariable("id") int id) {
+    private ResponseEntity<?> getPersonById(@PathVariable("id") Long id) {
 		var user = personService.getPersonById(id);
 		if (user != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(user);
@@ -43,8 +43,8 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
     
-	@DeleteMapping("/delete/{id}")
-	private ResponseEntity<?> deletePersonById(@PathVariable("id") int id) {
+	@DeleteMapping("/{id}")
+	private ResponseEntity<?> deletePersonById(@PathVariable("id") Long id) {
 		var user = personService.getPersonById(id);
 		if (user != null) {
 			personService.deleteUserById(id);
@@ -53,8 +53,8 @@ public class PersonController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
     
-	@PutMapping("/update/{id}")
-    private ResponseEntity<?> updatePersonById(@PathVariable("id") int id, 
+	@PutMapping("/{id}")
+    private ResponseEntity<?> updatePersonById(@PathVariable("id") Long id, 
 		@RequestBody Person newPerson) {
     	var person = personService.getPersonById(id);
     	if (person != null) {

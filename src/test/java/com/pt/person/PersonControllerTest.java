@@ -2,6 +2,7 @@ package com.pt.person;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -28,8 +29,6 @@ import com.pt.person.service.PersonService;
 @WebMvcTest(PersonController.class)
 public class PersonControllerTest {
 	
-	public static String endpoint = "/api";
-	
 	@Autowired
 	private MockMvc mockMvc;
 	
@@ -38,10 +37,10 @@ public class PersonControllerTest {
 	
 	@Test
 	public void getAllPersonsTest() throws Exception {
-		var usersList = List.of(new Person("Pedro", "Ferreira", "98234221", "2022-03-23"));
+		var usersList = List.of(new Person(1L, "Pedro", "Ferreira", "98234221", "2022-03-23"));
 		when(personService.getAllPersons()).thenReturn(usersList);
 		
-		mockMvc.perform(get(endpoint + "/persons"))
+		mockMvc.perform(get("/api/person"))
 			.andExpect(jsonPath("$.size()").value(1))
 			.andExpect(jsonPath("$[0].firstName").value("Pedro"))
 			.andExpect(jsonPath("$[0].lastName").value("Ferreira"))
@@ -53,11 +52,11 @@ public class PersonControllerTest {
 	
 	@Test
 	public void getPersonByIdTest() throws Exception {
-		var person = new Person("Pedro", "Ferreira", "98234221", "2022-03-23");
-        when(personService.getPersonById(anyInt())).thenReturn(person);
+		var person = new Person(1L, "Pedro", "Ferreira", "98234221", "2022-03-23");
+        when(personService.getPersonById(anyLong())).thenReturn(person);
         
         //create a mock HTTP request to verify the expected result
-		mockMvc.perform(get(endpoint + "/persons/{id}", 1))
+		mockMvc.perform(get("/api/person/{id}", person.getId()))
         	.andExpect(jsonPath("$.firstName").value("Pedro"))
         	.andExpect(jsonPath("$.lastName").value("Ferreira"))
         	.andExpect(jsonPath("$.date").value("2022-03-23"))
@@ -69,11 +68,11 @@ public class PersonControllerTest {
 	
 	@Test
 	public void savePersonTest() throws Exception {
-		var person = new Person("Filipe", "Fernandes", "965852262", "2022-03-20");
+		var person = new Person(1L, "Filipe", "Fernandes", "965852262", "2022-03-20");
         when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(person);
         
      	//mock request "/user
-        mockMvc.perform(post(endpoint + "/insert")
+        mockMvc.perform(post("/api/person")
         	.content(new ObjectMapper().writeValueAsString(person))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").exists())
@@ -87,7 +86,10 @@ public class PersonControllerTest {
 	
 	@Test
 	public void deletePersonByIdTest() throws Exception {
-        mockMvc.perform(delete(endpoint + "/delete/{id}", 1)
+		var person = new Person(1L, "Filipe", "Fernandes", "965852262", "2022-03-20");
+		when(personService.getPersonById(1L)).thenReturn(person);
+
+        mockMvc.perform(delete("/api/person/{id}", person.getId())
 	        .contentType(MediaType.APPLICATION_JSON)
 	        .accept(MediaType.APPLICATION_JSON))
         	.andDo(print())
@@ -97,14 +99,14 @@ public class PersonControllerTest {
 	
 	@Test
 	public void updatePersonByIdTest() throws Exception {
-		var person = new Person(1, "Bruno", "Fernandes", "98234221", "2022-03-20");
-		when(personService.getPersonById(anyInt())).thenReturn(person);
+		var person = new Person(1L, "Bruno", "Fernandes", "98234221", "2022-03-20");
+		when(personService.getPersonById(anyLong())).thenReturn(person);
 		
-		var updatedPerson = new Person("David", "Landup", "915643456", "2018-03-20");
+		var updatedPerson = new Person(1L, "David", "Landup", "915643456", "2018-03-20");
 		when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(updatedPerson);
         
         //mock update "/user
-        mockMvc.perform(put(endpoint + "/update/{id}", 1)
+        mockMvc.perform(put("/api/person/{id}", person.getId())
         	.content(new ObjectMapper().writeValueAsString(updatedPerson))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").exists())
@@ -121,7 +123,7 @@ public class PersonControllerTest {
 	private void getPersonByIdParamTest() throws Exception {
 		String id = "1";
 		
-		mockMvc.perform(get(endpoint + "/persons/{id}", 1)
+		mockMvc.perform(get("/api/person/{id}", 1)
 				.param("id", id))
 		
     	.andExpect(jsonPath("$.firstName").value("Pedro"))

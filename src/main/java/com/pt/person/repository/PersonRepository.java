@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.pt.person.model.Person;
 
 @Repository
-public interface PersonRepository extends JpaRepository<Person, Integer> {
+public interface PersonRepository extends JpaRepository<Person, Long> {
 	
 	Person findByPhoneNumber(String phoneNumber);
 	
