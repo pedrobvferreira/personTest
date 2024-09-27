@@ -29,9 +29,22 @@ public class PersonService {
       return PersonDTO.toDTO(person);
     }
 
-    public PersonDTO saveOrUpdatePerson(PersonDTO personDTO) {
+    public PersonDTO savePerson(PersonDTO personDTO) {
       Person person = personRepository.save(PersonDTO.toEntity(personDTO));
     	return PersonDTO.toDTO(person);
+    }
+
+    public PersonDTO updatePerson(Long id, PersonDTO personDTO) {
+      Person existingPerson = personRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException());
+
+      existingPerson.setFirstName(personDTO.getFirstName());
+      existingPerson.setLastName(personDTO.getLastName());
+      existingPerson.setPhoneNumber(personDTO.getPhoneNumber());
+      existingPerson.setDate(personDTO.getDate());
+
+      personRepository.save(existingPerson);
+    	return PersonDTO.toDTO(existingPerson);
     }
 
     public void deleteUserById(Long id) {

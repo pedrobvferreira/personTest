@@ -68,7 +68,7 @@ public class PersonControllerTest {
 	@Test
 	public void savePersonTest() throws Exception {
 		var person = new PersonDTO(1L, "Filipe", "Fernandes", "965852262", "2022-03-20");
-        when(personService.saveOrUpdatePerson(any(PersonDTO.class))).thenReturn(person);
+        when(personService.savePerson(any(PersonDTO.class))).thenReturn(person);
         
      	//mock request "/user
         mockMvc.perform(post("/api/person")
@@ -92,7 +92,7 @@ public class PersonControllerTest {
 	        .contentType(MediaType.APPLICATION_JSON)
 	        .accept(MediaType.APPLICATION_JSON))
         	.andDo(print())
-        	.andExpect(status().isOk())
+        	.andExpect(status().isNoContent())
         	.andReturn();
 	}
 	
@@ -102,7 +102,7 @@ public class PersonControllerTest {
 		when(personService.getPersonById(anyLong())).thenReturn(person);
 		
 		var updatedPerson = new PersonDTO(1L, "David", "Landup", "915643456", "2018-03-20");
-		when(personService.saveOrUpdatePerson(any(PersonDTO.class))).thenReturn(updatedPerson);
+		when(personService.updatePerson(anyLong(), any(PersonDTO.class))).thenReturn(updatedPerson);
         
         //mock update "/user
         mockMvc.perform(put("/api/person/{id}", person.getId())
