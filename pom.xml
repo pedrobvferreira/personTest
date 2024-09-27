@@ -28,11 +28,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- H2 BD -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>2.3.232</version> <!-- Utilize a versão mais recente -->
+		<!-- hsqldb BD -->
+		 <dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>2.7.1</version>
+			<scope>runtime</scope>
 		</dependency>
 		<!-- Dependency of lombok -->
 		<dependency>
