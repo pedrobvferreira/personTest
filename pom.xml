@@ -42,11 +42,15 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- Springdoc OpenAPI -->
-	        <dependency>
-	            <groupId>org.springdoc</groupId>
-	            <artifactId>springdoc-openapi-ui</artifactId>
-	            <version>1.7.0</version> <!-- Verifique a versão mais recente -->
-	        </dependency>
+	    <dependency>
+	        <groupId>org.springdoc</groupId>
+	        <artifactId>springdoc-openapi-ui</artifactId>
+	        <version>1.7.0</version>
+	    </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
