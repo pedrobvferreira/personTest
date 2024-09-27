@@ -1,7 +1,6 @@
 package com.pt.person;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -23,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pt.person.controller.PersonController;
-import com.pt.person.model.Person;
+import com.pt.person.dto.PersonDTO;
 import com.pt.person.service.PersonService;
 
 @WebMvcTest(PersonController.class)
@@ -37,7 +36,7 @@ public class PersonControllerTest {
 	
 	@Test
 	public void getAllPersonsTest() throws Exception {
-		var usersList = List.of(new Person(1L, "Pedro", "Ferreira", "98234221", "2022-03-23"));
+		var usersList = List.of(new PersonDTO(1L, "Pedro", "Ferreira", "98234221", "2022-03-23"));
 		when(personService.getAllPersons()).thenReturn(usersList);
 		
 		mockMvc.perform(get("/api/person"))
@@ -52,7 +51,7 @@ public class PersonControllerTest {
 	
 	@Test
 	public void getPersonByIdTest() throws Exception {
-		var person = new Person(1L, "Pedro", "Ferreira", "98234221", "2022-03-23");
+		var person = new PersonDTO(1L, "Pedro", "Ferreira", "98234221", "2022-03-23");
         when(personService.getPersonById(anyLong())).thenReturn(person);
         
         //create a mock HTTP request to verify the expected result
@@ -68,8 +67,8 @@ public class PersonControllerTest {
 	
 	@Test
 	public void savePersonTest() throws Exception {
-		var person = new Person(1L, "Filipe", "Fernandes", "965852262", "2022-03-20");
-        when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(person);
+		var person = new PersonDTO(1L, "Filipe", "Fernandes", "965852262", "2022-03-20");
+        when(personService.saveOrUpdatePerson(any(PersonDTO.class))).thenReturn(person);
         
      	//mock request "/user
         mockMvc.perform(post("/api/person")
@@ -86,7 +85,7 @@ public class PersonControllerTest {
 	
 	@Test
 	public void deletePersonByIdTest() throws Exception {
-		var person = new Person(1L, "Filipe", "Fernandes", "965852262", "2022-03-20");
+		var person = new PersonDTO(1L, "Filipe", "Fernandes", "965852262", "2022-03-20");
 		when(personService.getPersonById(1L)).thenReturn(person);
 
         mockMvc.perform(delete("/api/person/{id}", person.getId())
@@ -99,11 +98,11 @@ public class PersonControllerTest {
 	
 	@Test
 	public void updatePersonByIdTest() throws Exception {
-		var person = new Person(1L, "Bruno", "Fernandes", "98234221", "2022-03-20");
+		var person = new PersonDTO(1L, "Bruno", "Fernandes", "98234221", "2022-03-20");
 		when(personService.getPersonById(anyLong())).thenReturn(person);
 		
-		var updatedPerson = new Person(1L, "David", "Landup", "915643456", "2018-03-20");
-		when(personService.saveOrUpdatePerson(any(Person.class))).thenReturn(updatedPerson);
+		var updatedPerson = new PersonDTO(1L, "David", "Landup", "915643456", "2018-03-20");
+		when(personService.saveOrUpdatePerson(any(PersonDTO.class))).thenReturn(updatedPerson);
         
         //mock update "/user
         mockMvc.perform(put("/api/person/{id}", person.getId())

@@ -1,13 +1,14 @@
 package com.pt.person.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pt.person.model.Person;
+import com.pt.person.dto.PersonDTO;
+import com.pt.person.exception.NotFoundException;
 import com.pt.person.repository.PersonRepository;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
@@ -15,23 +16,28 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    public List<Person> getAllPersons() {
-        return personRepository.findAll();
+    public List<PersonDTO> getAllPersons() {
+        return personRepository.findAll().stream()
+        .map(PersonDTO::toDTO)
+        .collect(Collectors.toList());
     }
 
-    public Person getPersonById(Long id) {
-		Optional<Person> person = personRepository.findById(id);
-		if (person.isPresent()) {
-			return personRepository.findById(id).get();
-		}
-		return null;
+    public PersonDTO getPersonById(Long id) {
+      Person person = personRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException());
+        
+      return PersonDTO.toDTO(person);
     }
 
-    public Person saveOrUpdatePerson(Person person) {
-    	return personRepository.save(person);
+    public PersonDTO saveOrUpdatePerson(PersonDTO personDTO) {
+      Person person = personRepository.save(PersonDTO.toEntity(personDTO));
+    	return PersonDTO.toDTO(person);
     }
 
     public void deleteUserById(Long id) {
-    	personRepository.deleteById(id);
+    	Person person = personRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException());
+
+      personRepository.delete(person);
     }
 }

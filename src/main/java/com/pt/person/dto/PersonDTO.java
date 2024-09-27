@@ -12,6 +12,16 @@ public class PersonDTO {
 	private String phoneNumber;
 	private String date;
 
+    public PersonDTO(){}
+
+    public PersonDTO(Long id, String firstName, String lastName, String phoneNumber, String date){
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.date = date;
+	}
+
 	public static PersonDTO toDTO(Person obj) {
         PersonDTO dto = new PersonDTO();
         dto.setId(obj.getId());

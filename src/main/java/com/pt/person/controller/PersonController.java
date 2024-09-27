@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pt.person.dto.PersonDTO;
 import com.pt.person.model.Person;
 import com.pt.person.service.PersonService;
 
@@ -38,7 +39,7 @@ public class PersonController {
     }
 
     @PostMapping
-    private ResponseEntity<?> savePerson(@RequestBody Person person) {
+    private ResponseEntity<?> savePerson(@RequestBody PersonDTO person) {
     	var user = personService.saveOrUpdatePerson(person);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
