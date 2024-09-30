@@ -1,4 +1,4 @@
-package com.pt.person;
+package com.pt.person.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
