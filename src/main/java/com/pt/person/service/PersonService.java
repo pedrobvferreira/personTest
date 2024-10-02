@@ -2,6 +2,7 @@ package com.pt.person.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.pt.person.model.Person;
@@ -17,7 +18,11 @@ public class PersonService {
     PersonRepository personRepository;
 
     public List<PersonDTO> getAllPersons() {
-        return personRepository.findAll().stream()
+      List<Person> personsOrders = personRepository.findAll().stream()
+        .sorted((s1, s2) -> s1.getFirstName().compareTo(s2.getFirstName())
+        ).collect(Collectors.toList());
+
+        return personsOrders.stream()
         .map(PersonDTO::toDTO)
         .collect(Collectors.toList());
     }
